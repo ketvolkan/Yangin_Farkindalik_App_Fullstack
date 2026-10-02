@@ -3,6 +3,7 @@ using FireAlert.Application.Services;
 using FireAlert.Infrastructure.Data;
 using FireAlert.Infrastructure.Hubs;
 using FireAlert.Infrastructure.Notifications;
+using FireAlert.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
