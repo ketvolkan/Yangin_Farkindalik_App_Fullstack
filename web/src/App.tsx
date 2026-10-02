@@ -10,6 +10,7 @@ import { ReportModal } from './components/ReportModal';
 import { DashboardPage } from './pages/DashboardPage';
 import { BlogDetailPage } from './pages/BlogDetailPage';
 import { BlogSection } from './components/BlogSection';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'dashboard' | 'blog' | 'blog-detail'>('dashboard');
@@ -26,24 +27,29 @@ export const App: React.FC = () => {
   const [selectedReport, setSelectedReport] = useState<FireReport | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [apiError, setApiError] = useState<string>('');
   const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
   const [toast, setToast] = useState<{ id: string; report: FireReport } | null>(null);
 
-  // Fetch initial data
+  // Fetch data strictly from Backend API (No Dummy Data)
   const loadInitialData = async () => {
     setIsLoading(true);
+    setApiError('');
     try {
       const [activeReports, initialStats, blogPosts] = await Promise.all([
-        api.getActiveReports().catch(() => []),
-        api.getStatistics().catch(() => ({ today: 0, thisWeek: 0, thisMonth: 0, total: 0 })),
-        api.getBlogPosts().catch(() => []),
+        api.getActiveReports(),
+        api.getStatistics(),
+        api.getBlogPosts(),
       ]);
 
       setReports(activeReports);
       setStats(initialStats);
       setBlogs(blogPosts);
-    } catch (err) {
-      console.error('Veri yüklenirken hata:', err);
+    } catch (err: any) {
+      console.error('Backend API veri çekme hatası:', err);
+      setApiError(
+        'Backend API ile bağlantı kurulamadı. Lütfen .NET API servisinin çalıştığından emin olun (http://localhost:5000).'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -52,21 +58,21 @@ export const App: React.FC = () => {
   useEffect(() => {
     loadInitialData();
 
-    // Start SignalR connection
-    signalRService.startConnection('/hubs/fire');
+    // Start SignalR connection to Backend
+    signalRService.startConnection();
 
-    // Subscribe to FireReportCreated event
+    // Subscribe to real-time FireReportCreated event from Backend
     const unsubscribeFire = signalRService.onFireReportCreated((newReport) => {
-      console.log('⚡ [App] Canlı Yeni Yangın İhbarı:', newReport);
+      console.log('⚡ [App] Backend SignalR Yeni Yangın Bildirimi:', newReport);
 
-      // 1. Update reports list with new item
+      // 1. Update live reports state
       setReports((prev) => {
         const exists = prev.some((r) => r.id === newReport.id);
         if (exists) return prev;
         return [newReport, ...prev];
       });
 
-      // 2. Update statistics
+      // 2. Update live statistics state
       if (newReport.stats) {
         setStats(newReport.stats);
       } else {
@@ -84,15 +90,14 @@ export const App: React.FC = () => {
         report: newReport,
       });
 
-      // Auto dismiss after 7 seconds
       setTimeout(() => {
         setToast((current) => (current?.report.id === newReport.id ? null : current));
       }, 7000);
     });
 
-    // Subscribe to StatisticsUpdated event
+    // Subscribe to real-time StatisticsUpdated event from Backend
     const unsubscribeStats = signalRService.onStatisticsUpdated((updatedStats) => {
-      console.log('⚡ [App] Canlı İstatistik Güncellemesi:', updatedStats);
+      console.log('⚡ [App] Backend SignalR İstatistik Güncellemesi:', updatedStats);
       setStats(updatedStats);
     });
 
@@ -124,6 +129,25 @@ export const App: React.FC = () => {
         onNavigateToBlog={() => setCurrentPage('blog')}
         onOpenReportModal={() => setIsReportModalOpen(true)}
       />
+
+      {/* API Connection Error Banner */}
+      {apiError && (
+        <div className="bg-fireRed/15 border-b border-fireRed/30 px-4 py-3">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-fireRedLight font-semibold">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>{apiError}</span>
+            </div>
+            <button
+              onClick={loadInitialData}
+              className="px-3 py-1 rounded-lg bg-fireRed text-white text-xs font-bold hover:bg-fireRedLight transition-colors flex items-center gap-1.5 shrink-0"
+            >
+              <RefreshCw className="w-3 h-3" />
+              <span>Tekrar Dene</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
