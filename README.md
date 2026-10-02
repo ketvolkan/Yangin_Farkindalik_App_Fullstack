@@ -23,36 +23,36 @@
 
 ---
 
-## 📸 Ekran Görüntüleri (Arayüz Önizlemesi)
+## 📸 Ekran Görüntüleri
 
-<table align="center" width="100%">
-  <tr>
-    <th width="35%" align="center">📱 Mobil Uygulama (Flutter)</th>
-    <th width="65%" align="center">💻 Web Canlı Yangın Haritası & Dashboard (React)</th>
-  </tr>
-  <tr>
-    <td align="center" valign="top">
-      <img src="docs/screenshots/mobile_home.png" width="300" alt="FireAlert Mobil Ana Sayfa" style="border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
-      <br />
-      <em>Kullanıcı Dostu Dark Tema, Canlı İstatistikler & Acil Çağrı Erişimi</em>
-    </td>
-    <td align="center" valign="top">
-      <img src="docs/screenshots/web_dashboard.png" width="100%" alt="FireAlert Web Dashboard" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
-      <br />
-      <em>SignalR Destekli Canlı Harita, Anlık İhbar Akışı & İstatistik Paneli</em>
-    </td>
-  </tr>
-  <tr>
-    <th colspan="2" align="center">📖 Yangın Güvenliği & Bilinç Rehberi (Web Blog)</th>
-  </tr>
-  <tr>
-    <td colspan="2" align="center">
-      <img src="docs/screenshots/web_blog.png" width="90%" alt="FireAlert Web Blog" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
-      <br />
-      <em>İtfaiye Haftası, PASS Söndürme Kuralı ve Önleyici Güvenlik Makaleleri</em>
-    </td>
-  </tr>
-</table>
+### 📱 Mobil Uygulama (Flutter)
+
+<p align="center">
+  <img src="docs/screenshots/mobile_home.png" width="340" alt="FireAlert Mobil Ana Sayfa" style="border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+</p>
+<p align="center">
+  <em>Kullanıcı Dostu Dark Tema, Canlı Yangın Sayaçları, Acil 112 Çağrı Erişimi ve Yangın Güvenlik Rehberi</em>
+</p>
+
+---
+
+### 💻 Web Platformu (React + Vite)
+
+#### 🔴 Canlı Yangın Haritası & İhbar Akışı
+<p align="center">
+  <img src="docs/screenshots/web_dashboard.png" width="100%" alt="FireAlert Web Canlı Yangın Dashboard" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+</p>
+<p align="center">
+  <em>Mapbox Dark HD Harita Katmanı, Anlık Bildirim Akışı ve SignalR Gerçek Zamanlı İstatistik Paneli</em>
+</p>
+
+#### 📖 Yangın Güvenliği & Bilinç Rehberi
+<p align="center">
+  <img src="docs/screenshots/web_blog.png" width="100%" alt="FireAlert Web Yangın Rehberi" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+</p>
+<p align="center">
+  <em>İtfaiye Haftası Özel Bölümü, PASS Söndürme Metodu ve Yangın Önleme Rehberleri</em>
+</p>
 
 ---
 
@@ -251,51 +251,3 @@ cd mobile
 flutter pub get
 flutter run
 ```
-
----
-
-## 🧪 Testleri Çalıştırma
-
-Tüm katmanlar için birim testleri hazırlanmıştır:
-
-```bash
-# Mobil Testleri (Flutter)
-cd mobile
-flutter test
-
-# Backend Testleri (.NET xUnit)
-cd backend
-dotnet test
-```
-
----
-
-## 📜 Conventional Commits Geçmişi
-
-Proje adımları her mantıksal aşamada Conventional Commits standartlarına uygun olarak commit'lenmiştir:
-
-- `chore: initialize FireAlert monorepo`
-- `feat: initialize flutter getx architecture`
-- `feat: add local user onboarding`
-- `feat: initialize dotnet 10 api`
-- `feat: add fire report api`
-- `feat: add mobile fire reporting`
-- `feat: add mobile fire map`
-- `feat: add blog module`
-- `feat: initialize react dashboard`
-- `feat: add web fire map`
-- `feat: add fire statistics dashboard`
-- `feat: add realtime fire report updates`
-- `refactor: polish FireAlert user experience`
-- `test: add core FireAlert tests`
-- `fix: use CardThemeData for cardTheme in mobile theme`
-- `feat: integrate Mapbox dark tile layer with automatic fallback`
-- `fix: add location permissions to manifest and fix responsive location card in mobile`
-- `refactor: enforce strict backend data fetching with no dummy data`
-- `docs: update README with screenshots and technology showcase`
-
----
-
-## 📄 Lisans
-
-Bu proje, açık kaynak topluluğunun yangın farkındalığını artırmak ve toplumsal dayanışmayı güçlendirmek amacıyla **MIT Lisansı** ile geliştirilmiştir.
