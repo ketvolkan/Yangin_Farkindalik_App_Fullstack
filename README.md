@@ -1,47 +1,108 @@
-# 🔥 FireAlert – Sosyal Yangın Farkındalık Platformu
+# 🔥 FireAlert – Sosyal Yangın Farkındalık ve Canlı Takip Platformu
 
-FireAlert; vatandaşların gördükleri yangınları konum bilgisiyle anında bildirebildiği, bu bildirimlerin eş zamanlı olarak canlı harita üzerinde gösterildiği ve yangın güvenliği bilincini artıran açık kaynaklı bir **sosyal sorumluluk ve toplumsal dayanışma platformudur**.
-
-> ⚠️ **Önemli Acil Durum & Yasal Uyarı:**  
-> FireAlert resmi bir devlet itfaiye ihbar sistemi değildir. Kullanıcıların paylaştığı bildirimler doğrulanmış resmi yangın raporu niteliği taşımaz. Acil, tehlikeli ve hayati durumlarda lütfen vakit kaybetmeden derhal **112 Acil Çağrı Merkezi**'ni arayınız.
-
----
-
-## 🌟 Temel Felsefe & Özellikler
-
-- 🚫 **Kullanıcı Sistemi Yok**: Login, şifre, kayıt veya karmaşık roller bulunmaz.
-- 📱 **Kolay Mobil Katılım**: Mobil uygulama ilk açılışta yalnızca **Ad Soyad** alır ve yerel depolamada (`GetStorage`) saklar.
-- 🗺️ **Canlı Harita & Gerçek Zamanlı Takip**: Harita üzerinde yangın türüne özel ikonlar ve anlık bildirimler.
-- ⚡ **SignalR Anlık Güncelleme**: Mobil uygulamadan ihbar gönderildiği anda Web Dashboard'da sayfa yenilenmeden marker eklenir, sayaçlar artar ve toast bildirimi gösterilir.
-- 🚒 **İtfaiye Haftası & Yangın Güvenliği Rehberi**: Yangın anında yapılması gerekenler, söndürücü kullanımı (PASS kuralı) ve önleyici bilinç makaleleri.
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
+  <img src="https://img.shields.io/badge/Dart-3.x-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+  <img src="https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10" />
+  <img src="https://img.shields.io/badge/SignalR-RealTime-512BD4?style=for-the-badge&logo=signalr&logoColor=white" alt="SignalR" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 18" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Mapbox-Dark_HD-000000?style=for-the-badge&logo=mapbox&logoColor=white" alt="Mapbox" />
+</p>
 
 ---
 
-## 🏗️ Gerçek Zamanlı Veri Akış Mimarisi
+## 📌 Proje Hakkında
+
+**FireAlert**, vatandaşların gördükleri yangınları anlık GPS konum bilgisi ve görsellerle bildirebildiği, bu bildirimlerin eş zamanlı olarak web haritasında ve mobil cihazlarda görüntülendiği, aynı zamanda yangın güvenliği bilincini yükseltmeyi hedefleyen **açık kaynaklı, gerçek zamanlı bir sosyal sorumluluk ve farkındalık platformudur**.
+
+> [!CAUTION]
+> **HAYATİ VE YASAL UYARI:**  
+> FireAlert resmi bir devlet itfaiye ihbar sistemi değildir. Kullanıcılar tarafından oluşturulan bildirimler resmi olarak doğrulanmış acil durum çağrısı sayılmaz. Yangın ve acil durumlarda vakit kaybetmeden derhal **112 Acil Çağrı Merkezi**'ni arayınız.
+
+---
+
+## 📸 Ekran Görüntüleri (Arayüz Önizlemesi)
+
+<table align="center" width="100%">
+  <tr>
+    <th width="35%" align="center">📱 Mobil Uygulama (Flutter)</th>
+    <th width="65%" align="center">💻 Web Canlı Yangın Haritası & Dashboard (React)</th>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <img src="docs/screenshots/mobile_home.png" width="300" alt="FireAlert Mobil Ana Sayfa" style="border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+      <br />
+      <em>Kullanıcı Dostu Dark Tema, Canlı İstatistikler & Acil Çağrı Erişimi</em>
+    </td>
+    <td align="center" valign="top">
+      <img src="docs/screenshots/web_dashboard.png" width="100%" alt="FireAlert Web Dashboard" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+      <br />
+      <em>SignalR Destekli Canlı Harita, Anlık İhbar Akışı & İstatistik Paneli</em>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2" align="center">📖 Yangın Güvenliği & Bilinç Rehberi (Web Blog)</th>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="docs/screenshots/web_blog.png" width="90%" alt="FireAlert Web Blog" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
+      <br />
+      <em>İtfaiye Haftası, PASS Söndürme Kuralı ve Önleyici Güvenlik Makaleleri</em>
+    </td>
+  </tr>
+</table>
+
+---
+
+## ⚡ Öne Çıkan Özellikler & Mimari İlkeler
+
+### 1. 🚫 Sıfır Sürtünme: Giriş ve Şifresiz Kullanıcı Deneyimi
+- **Kullanıcı Kaydı & Şifre Yok:** Login, Register, JWT veya veritabanı kullanıcı tablosu bulunmaz.
+- **Yerel Saklama (Local Onboarding):** Mobil uygulama ilk açılışta yalnızca kullanıcıdan **Ad Soyad** alır ve cihazın güvenli yerel hafızasında (`GetStorage`) saklar.
+- **Doğrudan Web Erişimi:** Web paneline giren herkes canlı haritayı, son bildirimleri ve istatistikleri doğrudan anlık olarak izleyebilir.
+
+### 2. ⚡ Gerçek Zamanlı SignalR Veri Akışı
+- Mobil uygulamadan yeni bir yangın ihbarı gönderildiğinde:
+  1. `.NET 10 API` isteği karşılar ve veritabanına işler.
+  2. `SignalR FireHub` üzerinden tüm bağlı istemcilere `FireReportCreated` olayı fırlatılır.
+  3. React Dashboard haritasına anında animasyonlu marker eklenir, istatistik sayaçları canlı güncellenir ve sesli/görsel bildirim (toast) gösterilir.
+
+### 3. 🗺️ Yüksek Çözünürlüklü Harita Deneyimi
+- **Mapbox Dark HD Desteği:** Modern gece/karanlık temalı harita katmanı.
+- **Akıllı Fallback:** Çevrimdışı veya anahtar tanımlanmayan senaryolarda kesintisiz çalışan CartoDB Dark ve OpenStreetMap katman yedeklemesi.
+
+---
+
+## 🏗️ Sistem ve Veri Akış Mimarisi
 
 ```text
-       ┌────────────────────────┐
-       │   Flutter Mobil App    │
-       │ (Ad Soyad + GPS Konum) │
-       └───────────┬────────────┘
-                   │ POST /api/fire-reports
-                   ▼
-       ┌────────────────────────┐
-       │   .NET 10 Web API      │
-       │   (EF Core + Service)  │
-       └─────┬────────────┬─────┘
-             │            │
-             ▼            ▼
- ┌───────────────┐   ┌────────────────────────┐
- │  PostgreSQL   │   │   SignalR FireHub      │
- │  / SQLite DB  │   │  (FireReportCreated)   │
- └───────────────┘   └────────────┬───────────┘
-                                  │ WebSocket / SSE
-                                  ▼
-                     ┌────────────────────────┐
-                     │ React + Vite Dashboard │
-                     │  (Canlı Harita + Stats)│
-                     └────────────────────────┘
+                                 ┌─────────────────────────────────┐
+                                 │       Flutter Mobil App         │
+                                 │ (GetX + Geolocator + GetStorage)│
+                                 └───────────────┬─────────────────┘
+                                                 │
+                                                 │ HTTP POST /api/fire-reports
+                                                 ▼
+                                 ┌─────────────────────────────────┐
+                                 │        .NET 10 Web API          │
+                                 │ (Clean Architecture + EF Core)  │
+                                 └───────┬─────────────────┬───────┘
+                                         │                 │
+                         Veri Kaydı      │                 │ SignalR Event
+                                         ▼                 ▼
+                              ┌──────────────────┐  ┌───────────────────────┐
+                              │ PostgreSQL / DB  │  │    SignalR FireHub    │
+                              │ (EF Core Model)  │  │ (FireReportCreated)   │
+                              └──────────────────┘  └───────────┬───────────┘
+                                                                │
+                                                                │ WebSocket / SSE (Anlık Push)
+                                                                ▼
+                                                    ┌───────────────────────┐
+                                                    │ React Web Dashboard   │
+                                                    │ (Leaflet + Tailwind)  │
+                                                    └───────────────────────┘
 ```
 
 ---
@@ -49,145 +110,142 @@ FireAlert; vatandaşların gördükleri yangınları konum bilgisiyle anında bi
 ## 🛠️ Teknoloji Yığını
 
 ### 📱 Mobil Uygulama (Mobile)
-- **Framework**: Flutter 3.x & Dart 3.x
-- **State Management**: GetX (Feature-based: Routes, Bindings, Controllers, Views)
-- **Ağ İstemcisi**: Dio
-- **Yerel Depolama**: GetStorage (`StorageService`)
-- **Harita**: Flutter Map & LatLong2 (OSM / CartoDB Dark Tiles)
-- **Konum & İzin**: Geolocator & Permission Handler
-- **Medya**: Image Picker (Kamera & Galeri)
-- **Acil Arama**: URL Launcher (`tel:112`)
+- **Framework:** Flutter 3.x (Dart 3.x)
+- **State Management:** GetX (Reactive State, Bindings, Routing)
+- **HTTP / Ağ:** Dio
+- **Yerel Depolama:** GetStorage (`StorageService`)
+- **Harita & Konum:** `flutter_map`, `latlong2`, `geolocator`, `permission_handler`
+- **Görsel Seçici:** `image_picker` (Kamera ve Galeri)
+- **Acil Arama:** `url_launcher` (`tel:112`)
 
 ### ⚙️ Backend Web API
-- **Framework**: .NET 10 (ASP.NET Core Web API)
-- **Mimari**: Clean / Layered Architecture (Domain, Application, Infrastructure, Api)
-- **Veritabanı / ORM**: Entity Framework Core, PostgreSQL (Npgsql) & SQLite Fallback
-- **Gerçek Zamanlı İletişim**: SignalR (`/hubs/fire`)
-- **Dokümantasyon**: Swagger / OpenAPI
-- **Birim Testleri**: xUnit & Moq
+- **Framework:** .NET 10 (C# 13, ASP.NET Core Web API)
+- **Mimari:** Clean Architecture (Domain, Application, Infrastructure, API)
+- **Veritabanı / ORM:** Entity Framework Core, PostgreSQL (`Npgsql`) & SQLite desteği
+- **Gerçek Zamanlı:** Microsoft SignalR Core (`/hubs/fire`)
+- **API Dokümantasyonu:** Swagger / OpenAPI
+- **Test:** xUnit, FluentAssertions, Moq
 
-### 💻 Web Dashboard
-- **Framework**: React 18, TypeScript, Vite
-- **Stil & Tasarım**: Tailwind CSS (Dark Charcoal & Fire Palette)
-- **Gerçek Zamanlı İstemci**: `@microsoft/signalr` Client
-- **Harita**: Leaflet & React-Leaflet
-- **İkonlar**: Lucide React
+### 💻 Web Dashboard & Blog
+- **Framework:** React 18, TypeScript, Vite
+- **Stil & Tasarım:** Tailwind CSS (Dark Charcoal & Fire Accent Palette)
+- **Canlı Soket:** `@microsoft/signalr` Client
+- **Harita:** Leaflet & React-Leaflet (Mapbox HD Dark Layer & OSM Fallback)
+- **İkonografi:** Lucide React
 
 ---
 
-## 📁 Monorepo Dizin Yapısı
+## 📂 Monorepo Klasör Yapısı
 
 ```text
 FireAlert/
 │
-├── mobile/                  # Flutter Mobil Uygulaması (GetX Mimarisi)
+├── mobile/                        # Flutter Mobil Uygulaması
 │   ├── lib/
-│   │   ├── app/             # Rotalar, Temalar, Global Binding
-│   │   ├── core/            # Ağ, Depolama, Formatlayıcılar, Ortak Bileşenler
-│   │   ├── data/            # Modeller, Sağlayıcılar, Repository'ler
-│   │   └── modules/         # Onboarding, Home, Fire Report, Map, Blog
-│   └── test/                # Flutter Birim & Widget Testleri
+│   │   ├── app/                   # Rotalar, Tema Yapılandırması, Global Bindings
+│   │   ├── core/                  # Ağ İstemcisi, Depolama Servisi, Yardımcılar
+│   │   ├── data/                  # Modeller, Sağlayıcılar, Repository Katmanı
+│   │   └── modules/               # Onboarding, Home, Fire Report, Map, Blog, Emergency
+│   └── test/                      # Mobil Birim ve Widget Testleri
 │
-├── backend/                 # .NET 10 Web API
+├── backend/                       # .NET 10 Web API Katmanlı Mimarisi
 │   ├── src/
-│   │   ├── FireAlert.Domain/          # Entity'ler ve Enum'lar
+│   │   ├── FireAlert.Domain/          # Entity'ler, Değer Nesneleri, Enum'lar
 │   │   ├── FireAlert.Application/     # DTO'lar, Arayüzler ve Servisler
 │   │   ├── FireAlert.Infrastructure/  # DbContext, Repository'ler, SignalR ve Seed Data
-│   │   └── FireAlert.Api/             # Controller'lar, Hub'lar ve Program.cs
+│   │   └── FireAlert.Api/             # Controller'lar, Hub'lar, Dependency Injection
 │   └── tests/
 │       └── FireAlert.UnitTests/       # Backend xUnit Testleri
 │
-├── web/                     # React + TypeScript + Vite Web Dashboard
+├── web/                           # React + TypeScript + Vite Dashboard
 │   ├── src/
-│   │   ├── components/      # Canlı Harita, İstatistik Kartları, Toast, Modal
-│   │   ├── pages/           # Dashboard ve Blog Detay Sayfaları
-│   │   ├── services/        # REST API & SignalR Servisleri
-│   │   └── types/           # TypeScript Veri Tipleri
+│   │   ├── components/            # Harita, İstatistik Kartları, Toast, Modal
+│   │   ├── pages/                 # Canlı Dashboard ve Blog Detay Sayfası
+│   │   ├── services/              # Axios REST ve SignalR Servisleri
+│   │   └── types/                 # TypeScript Veri Arayüzleri
 │   └── index.html
 │
-├── docs/                    # Mimari ve Dokümantasyon Dosyaları
-├── .gitignore
+├── docs/                          # Proje Ekran Görüntüleri ve Ek Dokümanlar
+├── .gitignore                     # Hassas Veri ve Yapılandırma Dışlama Kuralları
 └── README.md
 ```
 
 ---
 
-## 📡 API Uç Noktaları (Endpoints)
+## 📡 REST API & SignalR Uç Noktaları
 
-### 🔴 Yangın İhbarları (Fire Reports)
+### 🔴 Yangın İhbarları (`/api/fire-reports`)
 | Metot | Uç Nokta | Açıklama |
 | :--- | :--- | :--- |
-| `GET` | `/api/fire-reports` | Kayıtlı tüm yangın bildirimlerini listeler |
-| `GET` | `/api/fire-reports/active` | Aktif (Reported, Reviewed) yangınları listeler |
-| `GET` | `/api/fire-reports/{id}` | Belirli bir bildirimin detayını getirir |
-| `POST` | `/api/fire-reports` | Yeni yangın ihbarı oluşturur ve SignalR ile yayınlar |
+| `GET` | `/api/fire-reports` | Sistemdeki tüm yangın bildirimlerini listeler |
+| `GET` | `/api/fire-reports/active` | Aktif (İncelenen / Bildirilen) yangınları döner |
+| `GET` | `/api/fire-reports/{id}` | Belirli bir yangın ihbarının detayını döner |
+| `POST` | `/api/fire-reports` | Yeni bir yangın ihbarı kaydeder ve anında SignalR ile yayınlar |
 
-**Yeni İhbar Gönderim Gövdesi (JSON):**
+**Örnek İhbar Gövdesi (JSON):**
 ```json
 {
   "reporterName": "Volkan Ket",
   "fireType": "Forest",
-  "description": "Yoğun duman ve alevler görülüyor.",
+  "description": "Dilek Yarımadası eteklerinde yoğun duman ve alevler görülüyor.",
   "latitude": 37.8636,
   "longitude": 27.2619,
   "imageUrl": null
 }
 ```
 
-### 📊 İstatistikler (Statistics)
+### 📊 İstatistikler (`/api/statistics`)
 | Metot | Uç Nokta | Açıklama |
 | :--- | :--- | :--- |
-| `GET` | `/api/statistics` | Bugün, Bu Hafta, Bu Ay ve Toplam ihbar sayıları |
+| `GET` | `/api/statistics` | Bugün, Bu Hafta, Bu Ay ve Toplam ihbar istatistiklerini getirir |
 
-**Yanıt Örneği:**
-```json
-{
-  "today": 12,
-  "thisWeek": 48,
-  "thisMonth": 137,
-  "total": 421
-}
-```
-
-### 📰 Yangın Güvenliği & Blog
+### 📰 Yangın Güvenliği & Blog (`/api/blog`)
 | Metot | Uç Nokta | Açıklama |
 | :--- | :--- | :--- |
-| `GET` | `/api/blog` | Yangın güvenliği ve bilinç makalelerini listeler |
-| `GET` | `/api/blog/{slug}` | Slug değerine göre makale detayını getirir |
+| `GET` | `/api/blog` | Yangın güvenliği ve bilinç makalelerini döner |
+| `GET` | `/api/blog/{slug}` | Slug değerine göre makale detayını ve adımlarını döner |
 
-### ⚡ SignalR Hub
-- **Hub URL**: `/hubs/fire`
-- **Olaylar (Events)**:
-  - `FireReportCreated`: Yeni bir yangın ihbarı eklendiğinde güncel istatistiklerle birlikte fırlatılır.
-  - `StatisticsUpdated`: İstatistikler güncellendiğinde tüm bağlı istemcilere yayınlanır.
+### ⚡ SignalR Hub (`/hubs/fire`)
+- `FireReportCreated`: Yeni bir yangın eklendiğinde tetiklenir, yeni ihbarı ve güncel istatistikleri iletir.
+- `StatisticsUpdated`: İstatistikler değiştiğinde tüm istemcilere fırlatılır.
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## 🚀 Hızlı Başlangıç ve Kurulum
 
-### 1. Depoyu Klonlayın
+### 1. Projeyi Klonlayın
 ```bash
 git clone https://github.com/ketvolkan/Yangin_Farkindalik_App_Fullstack.git FireAlert
 cd FireAlert
 ```
 
-### 2. Backend API'yi Başlatın (.NET 10)
+### 2. Backend API (.NET 10)
 ```bash
 cd backend/src/FireAlert.Api
+dotnet restore
 dotnet run
 ```
-- API adresi: `http://localhost:5000`
-- Swagger arayüzü: `http://localhost:5000/swagger`
+- API Adresi: `http://localhost:5000`
+- Swagger Arayüzü: `http://localhost:5000/swagger`
 
-### 3. Web Dashboard'u Başlatın (React + Vite)
+### 3. Web Dashboard (React + Vite)
 ```bash
 cd web
 npm install
+```
+> [!TIP]
+> Opsiyonel olarak `web` dizini altında `.env` dosyası oluşturup kendi Mapbox erişim anahtarınızı tanımlayabilirsiniz:
+> ```env
+> VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
+> ```
+> *(Tanımlanmadığı durumda uygulama otomatik olarak yüksek kaliteli açık kaynak CartoDB Dark harita katmanına geçiş yapar).*
+
+```bash
 npm run dev
 ```
-- Web adresi: `http://localhost:3000`
+- Web Adresi: `http://localhost:3000`
 
-### 4. Mobil Uygulamayı Başlatın (Flutter)
+### 4. Mobil Uygulama (Flutter)
 ```bash
 cd mobile
 flutter pub get
@@ -198,40 +256,46 @@ flutter run
 
 ## 🧪 Testleri Çalıştırma
 
-### Mobil Testleri (Flutter)
+Tüm katmanlar için birim testleri hazırlanmıştır:
+
 ```bash
+# Mobil Testleri (Flutter)
 cd mobile
 flutter test
-```
 
-### Backend Testleri (.NET xUnit)
-```bash
+# Backend Testleri (.NET xUnit)
 cd backend
 dotnet test
 ```
 
 ---
 
-## 📜 Conventional Git Commit Geçmişi
+## 📜 Conventional Commits Geçmişi
 
-1. `chore: initialize FireAlert monorepo`
-2. `feat: initialize flutter getx architecture`
-3. `feat: add local user onboarding`
-4. `feat: initialize dotnet 10 api`
-5. `feat: add fire report api`
-6. `feat: add mobile fire reporting`
-7. `feat: add mobile fire map`
-8. `feat: add blog module`
-9. `feat: initialize react dashboard`
-10. `feat: add web fire map`
-11. `feat: add fire statistics dashboard`
-12. `feat: add realtime fire report updates`
-13. `refactor: polish FireAlert user experience`
-14. `test: add core FireAlert tests`
-15. `docs: complete FireAlert documentation`
+Proje adımları her mantıksal aşamada Conventional Commits standartlarına uygun olarak commit'lenmiştir:
+
+- `chore: initialize FireAlert monorepo`
+- `feat: initialize flutter getx architecture`
+- `feat: add local user onboarding`
+- `feat: initialize dotnet 10 api`
+- `feat: add fire report api`
+- `feat: add mobile fire reporting`
+- `feat: add mobile fire map`
+- `feat: add blog module`
+- `feat: initialize react dashboard`
+- `feat: add web fire map`
+- `feat: add fire statistics dashboard`
+- `feat: add realtime fire report updates`
+- `refactor: polish FireAlert user experience`
+- `test: add core FireAlert tests`
+- `fix: use CardThemeData for cardTheme in mobile theme`
+- `feat: integrate Mapbox dark tile layer with automatic fallback`
+- `fix: add location permissions to manifest and fix responsive location card in mobile`
+- `refactor: enforce strict backend data fetching with no dummy data`
+- `docs: update README with screenshots and technology showcase`
 
 ---
 
-## 🤝 Katkıda Bulunma ve Lisans
+## 📄 Lisans
 
-Bu proje, açık kaynak topluluğunun yangın farkındalığını artırmak amacıyla geliştirilmiştir. MIT lisansı ile lisanslanmıştır.
+Bu proje, açık kaynak topluluğunun yangın farkındalığını artırmak ve toplumsal dayanışmayı güçlendirmek amacıyla **MIT Lisansı** ile geliştirilmiştir.
