@@ -1,0 +1,6 @@
+@FireAlert.Api_HostAddress = http://localhost:5128
+
+GET {{FireAlert.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
