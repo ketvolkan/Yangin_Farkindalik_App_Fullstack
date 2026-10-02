@@ -224,80 +224,128 @@ class FireReportView extends GetView<FireReportController> {
       ),
       child: Obx(() {
         if (controller.isFetchingLocation.value) {
-          return Row(
-            children: const [
-              SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.orangeAccent),
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.orangeAccent),
+                  ),
                 ),
-              ),
-              SizedBox(width: 12),
-              Text(
-                AppStrings.fetchingLocation,
-                style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
-              ),
-            ],
+                SizedBox(width: 12),
+                Text(
+                  AppStrings.fetchingLocation,
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                ),
+              ],
+            ),
           );
         }
 
         final lat = controller.latitude.value;
         final lng = controller.longitude.value;
+        final hasError = controller.locationError.value.isNotEmpty;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceLight,
+                    color: (controller.isGpsAccurate.value
+                            ? AppColors.greenSuccess
+                            : AppColors.orangeAccent)
+                        .withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.my_location_rounded,
-                    color: AppColors.greenSuccess,
+                    color: controller.isGpsAccurate.value
+                        ? AppColors.greenSuccess
+                        : AppColors.orangeAccent,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        lat != null && lng != null
+                            ? '${lat.toStringAsFixed(4)}, ${lng.toStringAsFixed(4)}'
+                            : '37.8636, 27.2619',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        controller.isGpsAccurate.value
+                            ? 'GPS Konumu Doğrulandı'
+                            : 'Varsayılan Konum (Kuşadası / Ege)',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: controller.isGpsAccurate.value
+                              ? AppColors.greenSuccess
+                              : AppColors.orangeAccent,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.refresh_rounded, color: AppColors.textPrimary),
+                  tooltip: 'Konumu Yenile',
+                  onPressed: controller.fetchCurrentLocation,
+                ),
+              ],
+            ),
+            if (hasError) ...[
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceLight,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
                   children: [
-                    Text(
-                      lat != null && lng != null
-                          ? '${lat.toStringAsFixed(4)}, ${lng.toStringAsFixed(4)}'
-                          : 'Konum henüz alınmadı',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                    const Icon(Icons.info_outline_rounded, size: 14, color: AppColors.yellowWarning),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        controller.locationError.value,
+                        style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
                       ),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      controller.locationError.value.isNotEmpty
-                          ? controller.locationError.value
-                          : AppStrings.locationSuccess,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: controller.locationError.value.isNotEmpty
-                            ? AppColors.yellowWarning
-                            : AppColors.textSecondary,
+                    InkWell(
+                      onTap: controller.openAppSettings,
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 4),
+                        child: Text(
+                          'İzin Ver',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors.orangeAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            IconButton(
-              icon: const Icon(Icons.refresh_rounded, color: AppColors.textMuted),
-              tooltip: 'Konumu Yenile',
-              onPressed: controller.fetchCurrentLocation,
-            ),
+              ),
+            ],
           ],
         );
       }),

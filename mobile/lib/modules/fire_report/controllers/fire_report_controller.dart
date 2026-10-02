@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart' as ph;
 import '../../../core/storage/storage_service.dart';
 import '../../../data/repositories/fire_report_repository.dart';
 
@@ -29,10 +30,11 @@ class FireReportController extends GetxController {
   final descriptionController = TextEditingController();
   final selectedImage = Rx<File?>(null);
 
-  final latitude = Rx<double?>(null);
-  final longitude = Rx<double?>(null);
+  final latitude = Rx<double?>(37.8636);
+  final longitude = Rx<double?>(27.2619);
   final isFetchingLocation = false.obs;
   final locationError = ''.obs;
+  final isGpsAccurate = false.obs;
 
   final isSubmitting = false.obs;
   final submitSuccess = false.obs;
@@ -63,51 +65,61 @@ class FireReportController extends GetxController {
     locationError.value = '';
 
     try {
+      // 1. Check if location service is enabled
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        // Fallback default coordinates (Izmir / Turkey area) if GPS disabled
-        latitude.value = 38.4237;
-        longitude.value = 27.1428;
-        locationError.value = 'Konum servisi kapalı. Varsayılan konum uygulandı.';
+        latitude.value = 37.8636;
+        longitude.value = 27.2619;
+        isGpsAccurate.value = false;
+        locationError.value = 'Cihaz GPS servisi kapalı. Varsayılan konum uygulandı.';
         return;
       }
 
+      // 2. Check and request permission
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          latitude.value = 38.4237;
-          longitude.value = 27.1428;
-          locationError.value = 'Konum izni verilmedi. Varsayılan konum uygulandı.';
+          latitude.value = 37.8636;
+          longitude.value = 27.2619;
+          isGpsAccurate.value = false;
+          locationError.value = 'Konum izni verilmedi (Varsayılan konum kullanılıyor).';
           return;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        latitude.value = 38.4237;
-        longitude.value = 27.1428;
-        locationError.value = 'Konum izni kalıcı olarak reddedildi.';
+        latitude.value = 37.8636;
+        longitude.value = 27.2619;
+        isGpsAccurate.value = false;
+        locationError.value = 'Konum izni reddedildi (Varsayılan konum kullanılıyor).';
         return;
       }
 
+      // 3. Get accurate current position with timeout
       Position position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.high,
-          timeLimit: Duration(seconds: 10),
+          timeLimit: Duration(seconds: 8),
         ),
       );
 
       latitude.value = position.latitude;
       longitude.value = position.longitude;
+      isGpsAccurate.value = true;
       locationError.value = '';
     } catch (e) {
-      // Fallback sensible coordinates for demo
       latitude.value = 37.8636;
       longitude.value = 27.2619;
-      locationError.value = 'Konum alınamadı: $e';
+      isGpsAccurate.value = false;
+      locationError.value = 'GPS sinyali alınamadı. Varsayılan konum seçildi.';
     } finally {
       isFetchingLocation.value = false;
     }
+  }
+
+  Future<void> openAppSettings() async {
+    await ph.openAppSettings();
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -144,7 +156,7 @@ class FireReportController extends GetxController {
     }
 
     if (latitude.value == null || longitude.value == null) {
-      errorMessage.value = 'Konum bilgisi alınamadı. Lütfen konum servislerini açın.';
+      errorMessage.value = 'Konum bilgisi alınamadı.';
       return;
     }
 
@@ -158,7 +170,7 @@ class FireReportController extends GetxController {
             : descriptionController.text.trim(),
         latitude: latitude.value!,
         longitude: longitude.value!,
-        imageUrl: null, // Image URL can be populated after upload or null in MVP
+        imageUrl: null,
       );
 
       submitSuccess.value = true;
