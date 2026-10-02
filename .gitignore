@@ -1,0 +1,52 @@
+# Global & OS
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+
+# .NET / Backend
+bin/
+obj/
+*.user
+*.suo
+appsettings.Development.json
+*.db
+*.db-journal
+uploads/
+FireAlert.Infrastructure/uploads/
+FireAlert.Api/uploads/
+
+# Node / React Web
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*.local
+
+# Flutter / Mobile
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+android/app/src/main/res/raw/
+android/.gradle
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+*.iml
+.ephemeral/
+linux/flutter/ephemeral/
+windows/flutter/ephemeral/
+macos/Flutter/ephemeral/
