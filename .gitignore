@@ -5,6 +5,7 @@ Thumbs.db
 *.tmp
 .vscode/
 .idea/
+.vs/
 
 # .NET / Backend
 bin/
@@ -14,6 +15,8 @@ obj/
 appsettings.Development.json
 *.db
 *.db-journal
+*.db-shm
+*.db-wal
 uploads/
 FireAlert.Infrastructure/uploads/
 FireAlert.Api/uploads/
@@ -25,6 +28,7 @@ dist-ssr/
 *.local
 .env
 .env.*.local
+*.tsbuildinfo
 
 # Flutter / Mobile
 .dart_tool/
